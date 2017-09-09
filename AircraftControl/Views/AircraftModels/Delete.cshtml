@@ -1,0 +1,55 @@
+﻿@model AircraftControl.Models.tblAircraftModel
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Remover Modelo da Aeronave</h2>
+
+<h3>Confirma a Exclusão do Registro?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CODE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CODE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ALTERNATIVE_CODE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ALTERNATIVE_CODE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MAX_DEPARTURE_WEIGHT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MAX_DEPARTURE_WEIGHT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MAX_LANDING_WEIGHT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MAX_LANDING_WEIGHT)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Remover" class="btn btn-default" /> |
+            @Html.ActionLink("Retornar", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,51 @@
+﻿@model AircraftControl.Models.tblAircraftModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<!--<h2>Details</h2>-->
+
+<div>
+    <h4>Modelo da Aeronave</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CODE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CODE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ALTERNATIVE_CODE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ALTERNATIVE_CODE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MAX_DEPARTURE_WEIGHT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MAX_DEPARTURE_WEIGHT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MAX_LANDING_WEIGHT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MAX_LANDING_WEIGHT)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Alterar", "Edit", new { id = Model.ID_AIRCRAFTMODEL }) |
+    @Html.ActionLink("Remover", "Index") |
+    @Html.ActionLink("Retornar", "Index")
+</p>

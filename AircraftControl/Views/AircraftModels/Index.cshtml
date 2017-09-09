@@ -1,0 +1,101 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+
+@model IPagedList<AircraftControl.Models.tblAircraftModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Modelo da Aeronave</h2>
+
+<p>
+    @Html.ActionLink("Criar Novo Registro", "Create")
+</p>
+
+
+<p>
+    @using (Html.BeginForm("Index", "AircraftModels", FormMethod.Get))
+    {
+        <b>Pesquisar por: </b> 
+        @Html.RadioButton("procurarPor", "CODE", true) <text>CODE</text>
+        @Html.RadioButton("procurarPor", "ALTERNATIVE_CODE") <text>ALTERNATIVE_CODE</text><br />
+        @Html.TextBox("criterio")<input type="submit" value="Procurar"/><br />
+
+    }
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.Display("ID")
+        </th>
+        <th>
+            <!--@Html.DisplayNameFor(model => model.First().CODE)-->
+            @Html.ActionLink("CODE", "Index", new {
+                                                   ordenarPor = ViewBag.OrdenarPorCode,
+                                                   procurarPor = Request.QueryString["procurarPor"],
+                                                   criterio = Request.QueryString["criterio"] })
+        </th>
+        <th>
+            <!--@Html.DisplayNameFor(model => model.First().ALTERNATIVE_CODE)-->
+            @Html.ActionLink("ALTERNATIVE_CODE", "Index", new {
+                                                                ordenarPor = ViewBag.OrdenarPorAlternativeCode,
+                                                                procurarPor = Request.QueryString["procurarPor"],
+                                                                criterio = Request.QueryString["criterio"],
+                                                                })
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().MAX_DEPARTURE_WEIGHT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().MAX_LANDING_WEIGHT)
+        </th>
+        <th></th>
+    </tr>
+
+    <!--
+    verificar se o model não existe registro para ser exibido    
+    -->
+    @if (Model.Count() == 0)
+    {
+        <tr>
+            <td colspan=" = "4">Nenhum registro foi encontrado com esse critério</td>
+        </tr>
+    }
+    else
+    { 
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID_AIRCRAFTMODEL)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CODE)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ALTERNATIVE_CODE)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MAX_DEPARTURE_WEIGHT)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MAX_LANDING_WEIGHT)
+                </td>
+                <td>
+                    @Html.ActionLink("Alterar", "Edit", new { id = item.ID_AIRCRAFTMODEL }) |
+                    @Html.ActionLink("Detalhes", "Details", new { id = item.ID_AIRCRAFTMODEL }) |
+                    @Html.ActionLink("Remover", "Delete", new { id = item.ID_AIRCRAFTMODEL })
+                </td>
+            </tr>
+        }
+    }    
+
+
+</table>
+
+@Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina , procurarPor = Request.QueryString["procurarPor"], criterio=Request.QueryString["criterio"] , ordenarPor = Request.QueryString["ordenarPor"], }),
+    new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded}
+    )
+    

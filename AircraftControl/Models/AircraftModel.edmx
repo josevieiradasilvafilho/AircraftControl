@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AircraftControlModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblAircraft">
+          <Key>
+            <PropertyRef Name="ID_AIRCRAFT" />
+          </Key>
+          <Property Name="ID_AIRCRAFT" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PREFIX" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="MAX_DEPARTURE_WEIGHT" Type="decimal" Precision="9" Scale="3" Nullable="false" />
+          <Property Name="MAX_LANDING_WEIGHT" Type="decimal" Precision="9" Scale="3" Nullable="false" />
+          <Property Name="PASSENGERS_COUNT" Type="int" />
+          <Property Name="WINGSPAN" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="ACTIVE" Type="bit" Nullable="false" />
+          <Property Name="ID_AIRCRAFTMODEL" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblAircraftModel">
+          <Key>
+            <PropertyRef Name="ID_AIRCRAFTMODEL" />
+          </Key>
+          <Property Name="ID_AIRCRAFTMODEL" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CODE" Type="nvarchar" MaxLength="4" Nullable="false" />
+          <Property Name="ALTERNATIVE_CODE" Type="nvarchar" MaxLength="4" />
+          <Property Name="MAX_DEPARTURE_WEIGHT" Type="decimal" Precision="9" Scale="3" Nullable="false" />
+          <Property Name="MAX_LANDING_WEIGHT" Type="decimal" Precision="9" Scale="3" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tblAircraft_tblAircraftModel">
+          <End Role="tblAircraftModel" Type="Self.tblAircraftModel" Multiplicity="1" />
+          <End Role="tblAircraft" Type="Self.tblAircraft" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAircraftModel">
+              <PropertyRef Name="ID_AIRCRAFTMODEL" />
+            </Principal>
+            <Dependent Role="tblAircraft">
+              <PropertyRef Name="ID_AIRCRAFTMODEL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AircraftControlModelStoreContainer">
+          <EntitySet Name="tblAircraft" EntityType="Self.tblAircraft" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblAircraftModel" EntityType="Self.tblAircraftModel" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tblAircraft_tblAircraftModel" Association="Self.FK_tblAircraft_tblAircraftModel">
+            <End Role="tblAircraftModel" EntitySet="tblAircraftModel" />
+            <End Role="tblAircraft" EntitySet="tblAircraft" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AircraftControlModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblAircraft">
+          <Key>
+            <PropertyRef Name="ID_AIRCRAFT" />
+          </Key>
+          <Property Name="ID_AIRCRAFT" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PREFIX" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MAX_DEPARTURE_WEIGHT" Type="Decimal" Precision="9" Scale="3" Nullable="false" />
+          <Property Name="MAX_LANDING_WEIGHT" Type="Decimal" Precision="9" Scale="3" Nullable="false" />
+          <Property Name="PASSENGERS_COUNT" Type="Int32" />
+          <Property Name="WINGSPAN" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="ACTIVE" Type="Boolean" Nullable="false" />
+          <Property Name="ID_AIRCRAFTMODEL" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tblAircraftModel" Relationship="Self.FK_tblAircraft_tblAircraftModel" FromRole="tblAircraft" ToRole="tblAircraftModel" />
+        </EntityType>
+        <EntityType Name="tblAircraftModel">
+          <Key>
+            <PropertyRef Name="ID_AIRCRAFTMODEL" />
+          </Key>
+          <Property Name="ID_AIRCRAFTMODEL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CODE" Type="String" MaxLength="4" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ALTERNATIVE_CODE" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="MAX_DEPARTURE_WEIGHT" Type="Decimal" Precision="9" Scale="3" Nullable="false" />
+          <Property Name="MAX_LANDING_WEIGHT" Type="Decimal" Precision="9" Scale="3" Nullable="false" />
+          <NavigationProperty Name="tblAircrafts" Relationship="Self.FK_tblAircraft_tblAircraftModel" FromRole="tblAircraftModel" ToRole="tblAircraft" />
+        </EntityType>
+        <Association Name="FK_tblAircraft_tblAircraftModel">
+          <End Role="tblAircraftModel" Type="Self.tblAircraftModel" Multiplicity="1" />
+          <End Role="tblAircraft" Type="Self.tblAircraft" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAircraftModel">
+              <PropertyRef Name="ID_AIRCRAFTMODEL" />
+            </Principal>
+            <Dependent Role="tblAircraft">
+              <PropertyRef Name="ID_AIRCRAFTMODEL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AircraftControlEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblAircrafts" EntityType="Self.tblAircraft" />
+          <EntitySet Name="tblAircraftModels" EntityType="Self.tblAircraftModel" />
+          <AssociationSet Name="FK_tblAircraft_tblAircraftModel" Association="Self.FK_tblAircraft_tblAircraftModel">
+            <End Role="tblAircraftModel" EntitySet="tblAircraftModels" />
+            <End Role="tblAircraft" EntitySet="tblAircrafts" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AircraftControlModelStoreContainer" CdmEntityContainer="AircraftControlEntities">
+          <EntitySetMapping Name="tblAircrafts">
+            <EntityTypeMapping TypeName="AircraftControlModel.tblAircraft">
+              <MappingFragment StoreEntitySet="tblAircraft">
+                <ScalarProperty Name="ID_AIRCRAFT" ColumnName="ID_AIRCRAFT" />
+                <ScalarProperty Name="PREFIX" ColumnName="PREFIX" />
+                <ScalarProperty Name="MAX_DEPARTURE_WEIGHT" ColumnName="MAX_DEPARTURE_WEIGHT" />
+                <ScalarProperty Name="MAX_LANDING_WEIGHT" ColumnName="MAX_LANDING_WEIGHT" />
+                <ScalarProperty Name="PASSENGERS_COUNT" ColumnName="PASSENGERS_COUNT" />
+                <ScalarProperty Name="WINGSPAN" ColumnName="WINGSPAN" />
+                <ScalarProperty Name="ACTIVE" ColumnName="ACTIVE" />
+                <ScalarProperty Name="ID_AIRCRAFTMODEL" ColumnName="ID_AIRCRAFTMODEL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblAircraftModels">
+            <EntityTypeMapping TypeName="AircraftControlModel.tblAircraftModel">
+              <MappingFragment StoreEntitySet="tblAircraftModel">
+                <ScalarProperty Name="ID_AIRCRAFTMODEL" ColumnName="ID_AIRCRAFTMODEL" />
+                <ScalarProperty Name="CODE" ColumnName="CODE" />
+                <ScalarProperty Name="ALTERNATIVE_CODE" ColumnName="ALTERNATIVE_CODE" />
+                <ScalarProperty Name="MAX_DEPARTURE_WEIGHT" ColumnName="MAX_DEPARTURE_WEIGHT" />
+                <ScalarProperty Name="MAX_LANDING_WEIGHT" ColumnName="MAX_LANDING_WEIGHT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
